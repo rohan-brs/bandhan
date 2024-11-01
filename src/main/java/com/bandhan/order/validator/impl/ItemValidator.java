@@ -1,7 +1,7 @@
 package com.bandhan.order.validator.impl;
 
-import com.bandhan.order.entity.Item;
-import com.bandhan.order.repository.ItemRepo;
+import com.bandhan.order.entity.Inventory;
+import com.bandhan.order.repository.InventoryRepo;
 import com.bandhan.order.validator.IsValidItem;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -12,11 +12,11 @@ import java.util.Optional;
 public class ItemValidator implements ConstraintValidator<IsValidItem, Integer> {
 
     @Autowired
-    private ItemRepo itemRepo;
+    private InventoryRepo inventoryRepo;
 
     @Override
     public boolean isValid(Integer itemId, ConstraintValidatorContext constraintValidatorContext) {
-        Optional<Item> item = itemRepo.findById(itemId);
+        Optional<Inventory> item = inventoryRepo.findByItemId(itemId);
         return item.isPresent();
     }
 }
