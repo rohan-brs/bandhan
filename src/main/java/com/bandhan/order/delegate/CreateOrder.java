@@ -1,6 +1,7 @@
 package com.bandhan.order.delegate;
 
 import com.bandhan.order.dto.CreateOrderRequest;
+import com.bandhan.order.entity.OrderDetails;
 import com.bandhan.order.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Named;
@@ -22,6 +23,8 @@ public class CreateOrder implements JavaDelegate {
         // TODO:: Look for a better way to fetch the json req
         String orderJson = delegateExecution.getBusinessKey();
         CreateOrderRequest createOrderRequest = objectMapper.readValue(orderJson, CreateOrderRequest.class);
-        orderService.createOrder(createOrderRequest);
+        OrderDetails order = orderService.createOrder(createOrderRequest);
+        delegateExecution.setVariable("orderId", order.getId());
+        delegateExecution.setVariable("customerType", order.getId());
     }
 }

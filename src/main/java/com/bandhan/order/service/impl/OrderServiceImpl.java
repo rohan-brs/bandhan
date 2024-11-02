@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,22 +49,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createOrder(CreateOrderRequest createOrderRequest) {
+    public OrderDetails createOrder(CreateOrderRequest createOrderRequest) {
         try {
             Customer customer = customerService.getCustomer(createOrderRequest.getCustomer().getUsername());
             Inventory item = inventoryService.updateAndGetInventory(createOrderRequest.getItemId(), createOrderRequest.getNoOfItem());
             OrderDetails orderDetails = createNewOrder(customer, createOrderRequest, item);
-            orderRepo.save(orderDetails);
+            orderDetails = orderRepo.save(orderDetails);
+            return orderDetails;
         } catch (NotFoundException e) {
             // This should not happen as this will be validated in initial stages
             log.error(e.getMessage());
         }
+        return null;
     }
 
     private OrderDetails createNewOrder(Customer customer, CreateOrderRequest createOrderRequest, Inventory item) {
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setCustomerId(customer.getId());
-        orderDetails.setItemId(createOrderRequest.getItemId());
+        orderDetails.setItemId(item.getItemId());
         orderDetails.setItemQuantity(createOrderRequest.getNoOfItem());
         double orderPrice = item.getPricePerUnit() * createOrderRequest.getNoOfItem();
         orderDetails.setOrderPrice(orderPrice);

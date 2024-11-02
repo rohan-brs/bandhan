@@ -1,5 +1,6 @@
 package com.bandhan.order.entity;
 
+import com.bandhan.order.constant.CustomerType;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,23 +11,27 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    private int id;
 
     @Column(name = "first_name")
-    public String firstName;
+    private String firstName;
 
     @Column(name = "last_name")
-    public String lastName;
+    private String lastName;
 
     @Column(name = "username")
-    public String username;
+    private String username;
 
     @Column(name = "email")
-    public String email;
+    private String email;
 
     @Column(name = "mobile")
-    public String mobile;
+    private String mobile;
 
     @Column(name = "password")
-    public String password;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private CustomerType type;
 }
