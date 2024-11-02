@@ -1,7 +1,7 @@
 package com.bandhan.order.delegate;
 
 import com.bandhan.order.dto.CreateOrderRequest;
-import com.bandhan.order.service.InventoryService;
+import com.bandhan.order.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Named;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -9,19 +9,19 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Named
-public class ValidateInventory implements JavaDelegate {
-
-    @Autowired
-    private InventoryService inventoryService;
+public class CreateOrder implements JavaDelegate {
 
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private OrderService orderService;
+
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
+        // TODO:: Look for a better way to fetch the json req
         String orderJson = delegateExecution.getBusinessKey();
         CreateOrderRequest createOrderRequest = objectMapper.readValue(orderJson, CreateOrderRequest.class);
-        boolean isItemPresent = inventoryService.isValidInventory(createOrderRequest);
-        delegateExecution.setVariable("isItemPresent", isItemPresent);
+        orderService.createOrder(createOrderRequest);
     }
 }
