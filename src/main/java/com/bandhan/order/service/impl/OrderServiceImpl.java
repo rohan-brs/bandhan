@@ -89,7 +89,8 @@ public class OrderServiceImpl implements OrderService {
         orderDetails.setItemQuantity(createOrderRequest.getNoOfItem());
         double orderPrice = item.getPricePerUnit() * createOrderRequest.getNoOfItem();
         orderDetails.setOrderPrice(orderPrice);
-        // This can be reduced by using auditing
+        // Initially all orders will have shipment type will be NORMAL
+        orderDetails.setShipmentType(ShipmentType.NORMAL);
         orderDetails.setCreatedDate(new Date());
         orderDetails.setUpdatedDate(new Date());
         return orderDetails;

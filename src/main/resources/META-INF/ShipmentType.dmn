@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_065d5cc" name="Shipment DMN" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.28.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.22.0">
+  <decision id="shipmentType" name="Shipment Type" camunda:historyTimeToLive="2">
+    <decisionTable id="DecisionTable_0dw1678" hitPolicy="FIRST">
+      <input id="Input_1" label="Customer Type" camunda:inputVariable="customerType">
+        <inputExpression id="InputExpression_1" typeRef="string" expressionLanguage="feel">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_14ydw42">
+          <text>"VIP","REGULAR"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_15h9l5w" label="Order Price" camunda:inputVariable="orderPrice">
+        <inputExpression id="LiteralExpression_010sh7x" typeRef="double">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1wvtvl4" label="Item Type" camunda:inputVariable="itemType">
+        <inputExpression id="LiteralExpression_1wyv8hr" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Shipment Type" name="shipmentType" typeRef="string">
+        <outputValues id="UnaryTests_1bqc8ti">
+          <text>"EXPRESS","NORMAL"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1ttl5ur">
+        <inputEntry id="UnaryTests_0ziupwv">
+          <text>"VIP"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1sqtghx">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1pz1ar3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02pgb7w">
+          <text>"EXPRESS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0x2ikem">
+        <inputEntry id="UnaryTests_1od0q2h">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0yjjsgk">
+          <text>&gt; 50000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11zkzmc">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1h095k7">
+          <text>"EXPRESS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06b007i">
+        <inputEntry id="UnaryTests_0x1488b">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0qd5l3m">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vuoviv">
+          <text>"ELECTRONICS"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jfrr0r">
+          <text>"EXPRESS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0v3u5yu">
+        <inputEntry id="UnaryTests_0ceq7r0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19vvl5k">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0t27ydl">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1aqji84">
+          <text>"NORMAL"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="shipmentType">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
