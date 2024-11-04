@@ -8,5 +8,7 @@ public interface InventoryService {
 
     boolean isValidInventory(CreateOrderRequest createOrderRequest);
 
-    Inventory updateAndGetInventory(int itemId, int noOfItems) throws NotFoundException;
+    Inventory getInventory(int itemId) throws NotFoundException;
+
+    void updateInventory(int itemId, int usedInventory) throws NotFoundException;
 }

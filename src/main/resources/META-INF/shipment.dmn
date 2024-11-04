@@ -39,7 +39,7 @@
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0g82oe4">
-          <text>"Express"</text>
+          <text>"EXPRESS"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_053wg9z">
@@ -53,7 +53,7 @@
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0kkx80e">
-          <text>"Express"</text>
+          <text>"EXPRESS"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0v3mxqt">
@@ -67,7 +67,7 @@
           <text>"ELECTRONICS"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1q2rapb">
-          <text>"Express"</text>
+          <text>"EXPRESS"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0wmfibz">
@@ -81,7 +81,7 @@
           <text></text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1tslycf">
-          <text>"Normal"</text>
+          <text>"NORMAL"</text>
         </outputEntry>
       </rule>
     </decisionTable>

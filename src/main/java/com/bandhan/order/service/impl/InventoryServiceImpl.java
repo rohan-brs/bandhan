@@ -29,16 +29,23 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Inventory updateAndGetInventory(int itemId, int noOfItems) throws NotFoundException {
-        log.info("Start updating inventory for itemId: {}, noOfItems: {}", itemId, noOfItems);
+    public Inventory getInventory(int itemId) throws NotFoundException {
+        log.info("Fetching inventory for itemId: {}", itemId);
         Optional<Inventory> inventory = inventoryRepo.findByItemId(itemId);
         if (inventory.isEmpty()) {
             throw new NotFoundException(String.format("Item not found with itemId: %s", itemId));
         }
+        return inventory.get();
+    }
+
+    @Override
+    public void updateInventory(int itemId, int usedInventory) throws NotFoundException {
+        Optional<Inventory> inventory = inventoryRepo.findByItemId(itemId);
+        if (inventory.isEmpty()) {
+            throw new NotFoundException(String.format("Inventory not found. Invalid itemId: %s", itemId));
+        }
         Inventory item = inventory.get();
-        item.setInventoryBalance(item.getInventoryBalance()-noOfItems);
-        item = inventoryRepo.save(item);
-        log.info("Inventory updated successfully for itemId: {}, updated inventoryBalance: {}", itemId, item.getInventoryBalance());
-        return item;
+        item.setInventoryBalance(item.getInventoryBalance() - usedInventory);
+        inventoryRepo.save(item);
     }
 }

@@ -1,6 +1,7 @@
 package com.bandhan.order.service.impl;
 
 import com.bandhan.order.constant.OrderConstants;
+import com.bandhan.order.constant.ShipmentType;
 import com.bandhan.order.dto.CreateOrderRequest;
 import com.bandhan.order.entity.Customer;
 import com.bandhan.order.entity.Inventory;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -54,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDetails createOrder(CreateOrderRequest createOrderRequest) {
         try {
             Customer customer = customerService.getCustomer(createOrderRequest.getCustomer().getUsername());
-            Inventory item = inventoryService.updateAndGetInventory(createOrderRequest.getItemId(), createOrderRequest.getNoOfItem());
+            Inventory item = inventoryService.getInventory(createOrderRequest.getItemId());
             OrderDetails orderDetails = createNewOrder(customer, createOrderRequest, item);
             orderDetails = orderRepo.save(orderDetails);
             return orderDetails;
@@ -65,13 +67,29 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public void updateOrder(int orderId, String shipmentType) throws NotFoundException {
+        Optional<OrderDetails> order = orderRepo.findById(orderId);
+        if (order.isEmpty()) {
+            throw new NotFoundException(String.format("Order not found for orderId: %s", orderId));
+        }
+        // Update shipment type
+        OrderDetails orderDetails = order.get();
+        orderDetails.setShipmentType(ShipmentType.valueOf(shipmentType));
+        orderDetails.setUpdatedDate(new Date());
+        // Update inventory balance
+        inventoryService.updateInventory(orderDetails.getItem().getItemId(), orderDetails.getItemQuantity());
+        orderRepo.save(orderDetails);
+    }
+
     private OrderDetails createNewOrder(Customer customer, CreateOrderRequest createOrderRequest, Inventory item) {
         OrderDetails orderDetails = new OrderDetails();
-        orderDetails.setCustomerId(customer.getId());
-        orderDetails.setItemId(item.getItemId());
+        orderDetails.setCustomer(customer);
+        orderDetails.setItem(item);
         orderDetails.setItemQuantity(createOrderRequest.getNoOfItem());
         double orderPrice = item.getPricePerUnit() * createOrderRequest.getNoOfItem();
         orderDetails.setOrderPrice(orderPrice);
+        // This can be reduced by using auditing
         orderDetails.setCreatedDate(new Date());
         orderDetails.setUpdatedDate(new Date());
         return orderDetails;
