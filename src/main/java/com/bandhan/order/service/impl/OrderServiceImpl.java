@@ -16,6 +16,8 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @Slf4j
 public class OrderServiceImpl implements OrderService {
@@ -70,6 +72,8 @@ public class OrderServiceImpl implements OrderService {
         orderDetails.setItemQuantity(createOrderRequest.getNoOfItem());
         double orderPrice = item.getPricePerUnit() * createOrderRequest.getNoOfItem();
         orderDetails.setOrderPrice(orderPrice);
+        orderDetails.setCreatedDate(new Date());
+        orderDetails.setUpdatedDate(new Date());
         return orderDetails;
     }
 }

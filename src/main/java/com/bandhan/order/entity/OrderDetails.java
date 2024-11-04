@@ -4,6 +4,8 @@ import com.bandhan.order.constant.ShipmentType;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name = "order_details")
@@ -28,4 +30,10 @@ public class OrderDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "shipment_type")
     private ShipmentType shipmentType;
+
+    @Column(name = "created_date")
+    private Date createdDate;
+
+    @Column(name = "updated_date")
+    private Date updatedDate;
 }

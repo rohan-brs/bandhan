@@ -21,7 +21,7 @@ public class ValidateInventory implements JavaDelegate {
     public void execute(DelegateExecution delegateExecution) throws Exception {
         String orderJson = delegateExecution.getBusinessKey();
         CreateOrderRequest createOrderRequest = objectMapper.readValue(orderJson, CreateOrderRequest.class);
-        boolean isItemPresent = inventoryService.isValidInventory(createOrderRequest);
-        delegateExecution.setVariable("isItemPresent", isItemPresent);
+        boolean isValidInventory = inventoryService.isValidInventory(createOrderRequest);
+        delegateExecution.setVariable("isValidInventory", isValidInventory);
     }
 }

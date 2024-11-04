@@ -25,6 +25,6 @@ public class CreateOrder implements JavaDelegate {
         CreateOrderRequest createOrderRequest = objectMapper.readValue(orderJson, CreateOrderRequest.class);
         OrderDetails order = orderService.createOrder(createOrderRequest);
         delegateExecution.setVariable("orderId", order.getId());
-        delegateExecution.setVariable("customerType", order.getId());
+        delegateExecution.setVariable("customerType", order.getCustomerId());
     }
 }
